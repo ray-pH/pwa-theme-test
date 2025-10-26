@@ -1,0 +1,9 @@
+{
+    "name": "My Simple PWA",
+    "short_name": "SimplePWA",
+    "start_url": "/pwa-theme-test/",
+    "scope": "/pwa-theme-test/",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#3E92CC"
+}

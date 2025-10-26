@@ -2,9 +2,7 @@ const CACHE_NAME = "simple-pwa-v1";
 const ASSETS = [
     "./",
     "./index.html",
-    "./manifest.webmanifest",
-    "./icons/icon-192.png",
-    "./icons/icon-512.png"
+    "./manifest.webmanifest"
 ];
 
 // Install: pre-cache essential assets
