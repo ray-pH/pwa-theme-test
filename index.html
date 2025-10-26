@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="theme-color" content="#3E92CC" />
+        <link rel="manifest" href="manifest.json" />
+        <link rel="icon" href="icons/icon-192.png" sizes="192x192" />
+        <title>My Simple PWA</title>
+        <style>
+            body { font-family: system-ui, sans-serif; margin: 0; padding: 2rem; }
+            .wrap { max-width: 640px; margin: 0 auto; }
+            button { padding: 0.6rem 1rem; border: 1px solid #ccc; border-radius: 8px; cursor: pointer; }
+            .note { color: #666; margin-top: 1rem; }
+        </style>
+    </head>
+    <body>
+        <div class="wrap">
+            <h1>✅ Simple PWA</h1>
+            <p>This page can be installed as an app (Add to Home Screen / Install).</p>
+            <button id="installBtn" hidden>Install</button>
+            <p class="note">Tip: PWAs need HTTPS. <code>localhost</code> counts as secure.</p>
+        </div>
+
+        <script>
+            if ("serviceWorker" in navigator) {
+                window.addEventListener("load", async () => {
+                    try {
+                        await navigator.serviceWorker.register("./sw.js", { scope: "./" });
+                    } catch (err) {
+                        console.error("SW registration failed:", err);
+                    }
+                });
+            }
+
+            let deferredPrompt;
+            const btn = document.getElementById("installBtn");
+
+            window.addEventListener("beforeinstallprompt", (e) => {
+                e.preventDefault();
+                deferredPrompt = e;
+                btn.hidden = false;
+            });
+
+            btn?.addEventListener("click", async () => {
+                btn.hidden = true;
+                if (!deferredPrompt) return;
+                deferredPrompt.prompt();
+                await deferredPrompt.userChoice;
+                deferredPrompt = null;
+            });
+        </script>
+    </body>
+</html>
